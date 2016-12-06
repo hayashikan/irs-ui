@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="scripts/angular.min.js"></script>
+	<script src="scripts/jsTag.min.js"></script>
+	<script src="scripts/app.module.js"></script>
+	<script src="scripts/controller.js"></script>
+	<link rel="stylesheet" href="stylesheets/jsTag.css"></link>
+	<link rel="stylesheet" href="stylesheets/irs.css"></link>
+</head>
+<body ng-app="app">
+	<div ng-controller="controller">
+
+	<div class="irs-select first">
+		<label for="frequency">Frequency: </label>
+		<select 
+			name="frequency" 
+			id="frequency"
+			ng-model="data.Frequency"
+			ng-options="freq for freq in frequencyTypes"
+		>
+		<option value="" disabled>--choose frequency--</option>
+		</select>
+	</div>
+
+	<div class="irs-select">
+		<label for="object">Object: </label>
+		<select 
+			name="object" 
+			id="object"
+			ng-model="data.Object"
+			ng-options="obj for obj in objectTypes"
+			ng-change="data.ReportType = null; data.UnitOfAnalysis = null; data.Metrics = null;"
+		>
+		<option value="" disabled>--choose object--</option>
+		</select>
+	</div>
+
+	<div class="irs-select">
+		<label for="unit-of-analysis">Unit of Analysis: </label>
+		<select 
+			name="unit-of-analysis" 
+			id="unit-of-analysis"
+			ng-model="data.UnitOfAnalysis"
+			ng-options="uoa.Type for uoa in unitOATypes[data.Object]"
+		>
+		<option value="" disabled>--choose unit of analysis--</option>
+		</select>
+	</div>
+
+	<div class="irs-select">
+		<label for="report-type">Report Type: </label>
+		<select 
+			name="report-type"
+			id="report-type"
+			ng-model="data.ReportType"
+			ng-options="rtype.Type for rtype in reportTypes[data.Object]"
+			ng-change="data.Metrics = null;"
+		>
+		<option value="" disabled>--choose report type--</option>
+		</select>
+	</div>
+
+	<div class="irs-select">
+		<label for="metrics">Metrics: </label>
+		<select 
+			name="metrics"
+			id="metrics"
+			ng-model="data.Metrics"
+			ng-options="metric for metric in metricTypes[data.Object+' '+data.ReportType.Type]"
+			multiple
+			size="7"
+		>
+		<option value="" disabled>--choose metrics--</option>
+		</select>
+	</div>
+
+	<a class="btn" 
+		ng-show="!!data.Frequency && !!data.Object && !!data.UnitOfAnalysis && !!data.ReportType && !!data.Metrics"
+		ng-click="saveJSON()"
+		ng-href="{{ url }}">
+		Export to JSON
+	</a>
+	<pre >{{data | json: 4}}</pre>
+	</div>
+</body>

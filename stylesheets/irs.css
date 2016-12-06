@@ -1,0 +1,25 @@
+body {
+	font-family: "Open Sans", sans-serif;
+	color: #555;
+}
+
+label {
+	display: block;
+	width: 200px;
+	height: 18px;
+	text-align: left;
+	font-size: 14px;
+}
+
+select {
+	display: inline-block;
+	width: 200px;
+}
+
+.irs-select {
+	margin: 15px 0 0 0;
+}
+
+.irs-select.first{
+	margin: 0 0 0 0;
+}
