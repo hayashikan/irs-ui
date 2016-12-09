@@ -19,6 +19,7 @@ angular
 			console.log(filename);
 			$http.get(filename)
 				.then(function(res){
+					console.log(res.data);
 					$scope.codebook = res.data;
 				});
 			console.log($scope.codebook);
