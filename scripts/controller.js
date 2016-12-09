@@ -27,6 +27,17 @@ angular
 					$scope.data.Directory = $scope.codebook.Directory;
 				});
 		};
+		
+		// Save JSON
+		$scope.saveJSON = function () {
+			$scope.toJSON = '';
+			$scope.toJSON = angular.toJson($scope.data);
+			var blob = new Blob([$scope.toJSON], { type:"application/json;charset=utf-8;" });			
+			var downloadLink = angular.element('<a></a>');
+                        downloadLink.attr('href',window.URL.createObjectURL(blob));
+                        downloadLink.attr('download', 'default.mamspec');
+			downloadLink[0].click();
+		};
 
     	// Basic Features editable
     	$scope.basicFeaturesEditable = true;
