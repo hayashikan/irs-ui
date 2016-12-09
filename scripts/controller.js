@@ -30,6 +30,7 @@ angular
 		
 		// Save JSON
 		$scope.saveJSON = function () {
+			console.log('Save Begin!');
 			$scope.toJSON = '';
 			$scope.toJSON = angular.toJson($scope.data);
 			var blob = new Blob([$scope.toJSON], { type:"application/json;charset=utf-8;" });			
@@ -37,6 +38,7 @@ angular
                         downloadLink.attr('href',window.URL.createObjectURL(blob));
                         downloadLink.attr('download', 'default.mamspec');
 			downloadLink[0].click();
+			console.log('Save Done!');
 		};
 
     	// Basic Features editable
