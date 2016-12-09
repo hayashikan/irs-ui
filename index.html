@@ -17,11 +17,11 @@
 
     <div class="container">
     <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
-    <div flex-xs flex-gt-xs="50" layout="column">
+    <div flex-xs flex-gt-xs="100" layout="column">
       <md-card>
       <md-card-title class="md-headline">Step 1: Basic Features</md-card-title>
       <md-card-content>
-        <div layout="column">
+        <div layout-xs="column" layout-gt-xs="row">
 
           <md-input-container flex>
             <label>Frequency</label>
@@ -57,9 +57,10 @@
         <md-button ng-click="toggleBasicFeatures()">{{basicFeaturesOps}}</md-button>
       </md-card-actions>
       </md-card>
+      
     </div>
 
-    <div flex-xs flex-gt-xs="50" layout="column">
+    <div flex-xs flex-gt-xs="100" layout="column">
       <md-card>
       <md-card-title class="md-headline">Step 2: Choose Metrics</md-card-title>
       <md-card-content>
@@ -124,7 +125,7 @@
       </md-card>
     </div>   
 
-    <div flex-xs flex-gt-xs="50" layout="column">
+    <div flex-xs flex-gt-xs="100" layout="column">
       <md-card>
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
