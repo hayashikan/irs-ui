@@ -15,7 +15,7 @@ angular
     	// Add code book to mamspec
 		$scope.addCodebook = function () {
 			// body...
-			var filename = 'scripts/' + $scope.data.Object + 'Codebook.js';
+			var filename = 'scripts/' + $scope.data.Object + 'Codebook.json';
 			console.log(filename);
 			$http.get(filename)
 				.then(function(res){
