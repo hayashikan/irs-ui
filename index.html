@@ -122,38 +122,14 @@
         <md-button ng-click="toggleUnitGroup()">{{unitGroupOps}}</md-button>
       </md-card-actions>
       </md-card>
-    </div>
-
-    <div flex-xs flex-gt-xs="50" layout="column">
-      <md-card>
-      <md-card-title class="md-headline">JSON</md-card-title>
-      <md-card-content>
-        <div layout="column">
-          <pre> data: {{data | json: 4}} </pre>
-          <pre> selectedMetric: {{selectedMetric | json: 4}} </pre>
-          <pre> searchMetricText: {{searchMetricText | json: 4}} </pre>
-        </div>
-      </md-card-content>
-      </md-card>
-    </div>
-
-    <div flex-xs flex-gt-xs="50" layout="column">
-      <md-card>
-      <md-card-title class="md-headline">JSON</md-card-title>
-      <md-card-content>
-        <div layout="column">
-          <pre> toJSON: {{toJSON}} </pre>
-        </div>
-      </md-card-content>
-      </md-card>
-    </div>
-      
+    </div>   
 
     <div flex-xs flex-gt-xs="50" layout="column">
       <md-card>
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
-        <md-button ng-click="addCodebook(); saveJSON();" class="md-primary md-raised">Export MAM Spec</md-button>
+        <md-button ng-click="addCodebook();" class="md-primary md-raised">Step 1: Generate MAM Spec</md-button>
+        <md-button ng-click="saveJSON();" class="md-primary md-raised">Step 2: Export MAM Spec</md-button>
       </md-card-actions>
       </md-card>
     </div>
