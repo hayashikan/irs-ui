@@ -1,0 +1,2 @@
+angular
+	.module('irsApp', ['ngMaterial']);

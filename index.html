@@ -1,89 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<script src="scripts/angular.min.js"></script>
-	<script src="scripts/jsTag.min.js"></script>
-	<script src="scripts/app.module.js"></script>
-	<script src="scripts/controller.js"></script>
-	<link rel="stylesheet" href="stylesheets/jsTag.css"></link>
-	<link rel="stylesheet" href="stylesheets/irs.css"></link>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+  <link rel="stylesheet" href="stylesheets/irs.css">
 </head>
-<body ng-app="app">
-	<div ng-controller="controller">
+<body ng-app="irsApp" ng-cloak>
+  <div ng-controller="controller">
 
-	<div class="irs-select first">
-		<label for="frequency">Frequency: </label>
-		<select 
-			name="frequency" 
-			id="frequency"
-			ng-model="data.Frequency"
-			ng-options="freq for freq in frequencyTypes"
-		>
-		<option value="" disabled>--choose frequency--</option>
-		</select>
-	</div>
+    <md-toolbar layout="row" class="md-whiteframe-4dp">
+    <div class="md-toolbar-tools irs-toolbar-headline">
+      <h1>IRS Specification</h1>
+    </div>
+    </md-toolbar>
 
-	<div class="irs-select">
-		<label for="object">Object: </label>
-		<select 
-			name="object" 
-			id="object"
-			ng-model="data.Object"
-			ng-options="obj for obj in objectTypes"
-			ng-change="data.ReportType = null; data.UnitOfAnalysis = null; data.Metrics = null;"
-		>
-		<option value="" disabled>--choose object--</option>
-		</select>
-	</div>
+    <div class="container">
+    <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card>
+      <md-card-title class="md-headline">Step 1: Basic Features</md-card-title>
+      <md-card-content>
+        <div layout="column">
 
-	<div class="irs-select">
-		<label for="unit-of-analysis">Unit of Analysis: </label>
-		<select 
-			name="unit-of-analysis" 
-			id="unit-of-analysis"
-			ng-model="data.UnitOfAnalysis"
-			ng-options="uoa.Type for uoa in unitOATypes[data.Object]"
-		>
-		<option value="" disabled>--choose unit of analysis--</option>
-		</select>
-	</div>
+          <md-input-container flex>
+            <label>Frequency</label>
+            <md-select name="frequency" ng-model="data.Frequency" ng-disabled="!basicFeaturesEditable" required>
+              <md-option ng-repeat="freq in frequencyTypes" ng-value="freq">{{freq}}</md-option>
+            </md-select>
+          </md-input-container>
 
-	<div class="irs-select">
-		<label for="report-type">Report Type: </label>
-		<select 
-			name="report-type"
-			id="report-type"
-			ng-model="data.ReportType"
-			ng-options="rtype.Type for rtype in reportTypes[data.Object]"
-			ng-change="data.Metrics = null;"
-		>
-		<option value="" disabled>--choose report type--</option>
-		</select>
-	</div>
+          <md-input-container flex>
+            <label>Object</label>
+            <md-select name="object" ng-model="data.Object" ng-disabled="!basicFeaturesEditable" required>
+              <md-option ng-repeat="obj in objectTypes" ng-value="obj">{{obj}}</md-option>
+            </md-select>
+          </md-input-container>
 
-	<div class="irs-select">
-		<label for="metrics">Metrics: </label>
-		<select 
-			name="metrics"
-			id="metrics"
-			ng-model="data.Metrics"
-			ng-options="metric for metric in metricTypes[data.Object+' '+data.ReportType.Type]"
-			multiple
-			size="7"
-		>
-		<option value="" disabled>--choose metrics--</option>
-		</select>
-	</div>
+          <md-input-container flex>
+            <label>Unit Of Analysis</label>
+            <md-select name="unit-of-analysis" ng-model="data.UnitOfAnalysis" ng-disabled="!basicFeaturesEditable" required>
+              <md-option ng-repeat="uoa in unitOATypes[data.Object]" ng-value="uoa">{{uoa.Type}}</md-option>
+            </md-select>
+          </md-input-container>
 
-	<a class="btn" 
-	ng-class="data.Frequency && data.Object && data.UnitOfAnalysis && data.ReportType && data.Metrics ? 'btn active' : 'btn'"
-	ng-click="data.Frequency && data.Object && data.UnitOfAnalysis && data.ReportType && data.Metrics ? saveJSON() : ''" 
-	ng-href="{{url}}">
-		Export to JSON
-	</a>
+          <md-input-container flex>
+            <label>Report Type</label>
+            <md-select name="report-type" ng-model="data.ReportType" ng-disabled="!basicFeaturesEditable" required>
+              <md-option ng-repeat="rtype in reportTypes[data.Object]" ng-value="rtype">{{data.Object+' '+rtype.Type}}</md-option>
+            </md-select>
+          </md-input-container>
 
-	
-	</div>
+        </div>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="toggleBasicFeatures()">{{basicFeaturesOps}}</md-button>
+      </md-card-actions>
+      </md-card>
+    </div>
+
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card>
+      <md-card-title class="md-headline">Step 2: Choose Metrics</md-card-title>
+      <md-card-content>
+        <div layout="column">
+          <md-chips ng-model="data.Metrics" readonly="!metricEditable" md-require-match="true" required>
+            <md-autocomplete
+              ng-disabled="!metricEditable"
+              md-no-cache="true"
+              md-selected-item="selectedMetric"
+              md-search-text="searchMetricText"
+              md-items="metric in metricTypes[data.Object+' '+data.ReportType.Type]"
+              md-item-text="metric"
+              md-min-length="0"
+              placeholder="Choose Metrics">
+              <span md-highlight-text="searchMetricText">{{metric}}</span>
+            </md-autocomplete>
+            <md-chip-template>
+              <span>{{$chip}}</span>
+            </md-chip-template>
+          </md-chips>
+        </div>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="toggleMetric()">{{metricOps}}</md-button>
+      </md-card-actions>
+      </md-card>
+    </div>
+
+    <div flex-xs flex-gt-xs="100" layout="column" ng-if="(data.UnitOfAnalysis.Type=='Application Group' || data.UnitOfAnalysis.Type=='Website Group') && !basicFeaturesEditable">
+      <md-card>
+      <md-card-title class="md-headline">{{data.Object+' Group Setting'}}</md-card-title>
+      <md-card-content>
+        <md-list flex="">
+        <md-list-item>
+          <div layout="row" flex>
+            <div class="irs-th" flex="30">Group Name</div>
+            <div class="irs-th" flex="70">Group Items</div>
+          </div>
+          <md-button class="md-secondary" ng-click="addRow()" ng-disabled="!unitGroupEditable">ADD</md-button>
+        <md-divider></md-divider>
+        </md-list-item>
+        <md-list-item ng-repeat="group in data.UnitOfAnalysis.GroupSpec">
+          <div layout="row" flex>
+            <div flex="30">
+              <md-input-container class="md-block" flex="90" md-no-float >
+                <input type="text" ng-model="group.GroupName" placeholder="Group Name" ng-disabled="!unitGroupEditable">
+              </md-input-container>
+            </div>
+            <div flex="70">
+              <md-chips ng-model="group.GroupItems" md-on-add="group.GroupItems = validateGroupItems(group.GroupItems, $index)" name="groupitems" placeholder="Enter {{data.Object}} Codes" readonly="!unitGroupEditable" md-add-on-blur="true" >
+                <md-chip-template>{{$chip}}</md-chip-template>
+              </md-chips>
+            </div>
+          </div>
+          <md-button class="md-secondary" ng-disabled="!unitGroupEditable" ng-click="removeRow($index)">REMOVE</md-button>
+        </md-list-item>
+        </md-list>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="toggleUnitGroup()">{{unitGroupOps}}</md-button>
+      </md-card-actions>
+      </md-card>
+    </div>
+
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card>
+      <md-card-title class="md-headline">JSON</md-card-title>
+      <md-card-content>
+        <div layout="column">
+          <pre> data: {{data | json: 4}} </pre>
+          <pre> selectedMetric: {{selectedMetric | json: 4}} </pre>
+          <pre> searchMetricText: {{searchMetricText | json: 4}} </pre>
+        </div>
+      </md-card-content>
+      </md-card>
+    </div>
+
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card>
+      <md-card-title class="md-headline">Export</md-card-title>
+      <md-card-actions layout="column" layout-align="center stretch">
+        <md-button ng-click="addCodebook()" class="md-primary md-raised">Export MAM Spec</md-button>
+      </md-card-actions>
+      </md-card>
+    </div>
+
+    </md-content>
+    </div>
+
+  </div>
+  <!--
+    Your HTML content here
+  -->  
+  
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>
+
+  <!-- Your application bootstrap  -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controller.js"></script>
+  
 </body>
+</html>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->
