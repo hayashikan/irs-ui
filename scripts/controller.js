@@ -3,6 +3,7 @@ angular
 	.controller('controller', ['$scope', '$http', IRSController]);
 
 	function IRSController($scope, $http) {
+		
 		// data
 		$scope.data = {
 			Frequency: null,
@@ -12,27 +13,39 @@ angular
 			Metrics: []
     	};
 		
+		$scope.output = null;
 		$scope.codebook = null;
+		$scope.selectedItem = null;
+		$scope.searchText = null;
+		$scope.demographics = loadDemographics()
 
     	// Add code book to mamspec
 		$scope.addCodebook = function () {
 			// body...
 			var filename = 'scripts/' + $scope.data.Object + 'Codebook.json';
-			console.log(filename);
 			$http.get(filename)
 				.then(function(res){
-					console.log('Codebook Get!');
 					$scope.codebook = res.data;
-					$scope.data.parse = $scope.codebook.parse;
-					$scope.data.Directory = $scope.codebook.Directory;
+					$scope.output.parse = $scope.codebook.parse;
+					$scope.output.Directory = $scope.codebook.Directory;
+					console.log('Codebook Get!');
 				});
 		};
 		
+		// clear output
+		$scope.clearOutput = function () {
+			$scope.output = angular.copy($scope.data);
+			if ($scope.output.ReportType.Type=='Usage By Target Report') {
+				$scope.output.ReportType.TargetGroup = $scope.output.ReportType.TargetGroup.map(function (item) {
+					delete item.QueryArray;
+					return item;
+				});};
+		};
+
 		// Save JSON
 		$scope.saveJSON = function () {
-			console.log('Save Begin!');
 			$scope.toJSON = '';
-			$scope.toJSON = angular.toJson($scope.data);
+			$scope.toJSON = angular.toJson($scope.output);
 			var blob = new Blob([$scope.toJSON], { type:"application/json;charset=utf-8;" });			
 			var downloadLink = angular.element('<a></a>');
                         downloadLink.attr('href',window.URL.createObjectURL(blob));
@@ -77,6 +90,18 @@ angular
     		};
     	}
 
+    	// Target Analysis Group Editable
+    	$scope.targetGroupEditable = true;
+    	$scope.targetGroupOps = 'SAVE';
+    	$scope.toggleTargetGroup = function () {
+    		$scope.targetGroupEditable = !$scope.targetGroupEditable;
+    		if ($scope.targetGroupEditable) {
+    			$scope.targetGroupOps = 'SAVE';
+    		} else {
+    			$scope.targetGroupOps = 'EDIT';
+    		};
+    	}
+
     	// App/Web Group Spec validation
     	$scope.validateGroupItems = function(items, index) {
     		var pattern = /^\d{8}$/i;
@@ -90,20 +115,82 @@ angular
     	};
 
 
-    	// Valid App/Web Group Items Filter
+    	// Search Demographics
+    	$scope.querySearchDemo = function (query) {
+    		var results = query ? $scope.demographics.filter($scope.createFilterFor(query)) : [];
+    		return results
+    	}
+
+    	$scope.createFilterFor = function (query) {
+    		var lowercaseQuery = angular.lowercase(query);
+
+    		return function filterFn(item) {
+    			return (item._lowername.indexOf(lowercaseQuery)===0) || (item._lowercat.indexOf(lowercaseQuery)===0);
+    		};
+    	}
 
 
     	// Remove Row: App/Web Group
-    	$scope.removeRow = function (index) {
+    	$scope.removeUnitGroupRow = function (index) {
     		console.log(index);
     		$scope.data.UnitOfAnalysis.GroupSpec.splice(index, 1)
     	};
 
     	// Add Row: App/Web Group
-    	$scope.addRow = function () {
+    	$scope.addUnitGroupRow = function () {
     		$scope.data.UnitOfAnalysis.GroupSpec.push({GroupName: "", GroupItems: []});
     	}
 
+    	// Remove Row: Target Group
+    	$scope.removeTargetGroupRow = function (index) {
+    		console.log(index);
+    		$scope.data.ReportType.TargetGroup.splice(index, 1)
+    	};
+
+    	// Add Row: Target Group
+    	$scope.addTargetGroupRow = function () {
+    		$scope.data.ReportType.TargetGroup.push({GroupName: "", QueryArray: [], Query: ""});
+    	}
+
+    	// Target Group: Join Group Query
+    	$scope.join2Query = function (queryarray) {
+    		//return queryarray.join(' ');
+    		var results = queryarray.map(function (item){
+    			return item.query;
+    		});
+    		return results.join(' ');
+
+    	}
+
+    	function loadDemographics() {
+    		var demographics = [{
+					name: 'and', cat: 'Operator', query: "&"
+				},{
+					name: 'or', cat: 'Operator', query: "|"
+				},{
+					name: '(', cat: 'Operator', query: '('
+				},{
+					name: ')', cat: 'Operator', query: ')'
+				},{
+					name: 'Male', cat: 'Gender', query: "Gender=='01'"
+				},{
+					name: 'Female', cat: 'Gender', query: "Gender=='02'"
+				},{
+					name: '18 - 24', cat: 'Age Group', query: "(Age_Group=='01' | Age_Group=='02')"
+				},{
+					name: '25 - 34', cat: 'Age Group', query: "(Age_Group=='03' | Age_Group=='04')"
+				},{
+					name: '35 - 49', cat: 'Age Group', query: "(Age_Group=='05' | Age_Group=='06' | Age_Group=='07')"
+				},{
+					name: '50 - 64', cat: 'Age Group', query: "(Age_Group=='08' | Age_Group=='09' | Age_Group=='10')"
+				}];
+
+			return demographics.map(function (demo) {
+				demo._lowername = demo.name.toLowerCase();
+				demo._lowercat = demo.cat.toLowerCase();
+				return demo;
+			});
+    	};
 
     	$scope.frequencyTypes = [
 			'Daily',
@@ -154,7 +241,7 @@ angular
 				Type: 'Usage Report'
 			}, {
 				Type: 'Usage By Target Report',
-				TargetGroup: [],
+				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}],
 			}, {
 				Type: 'Usage Day Part Report',
 				Interval: 60,
@@ -168,7 +255,6 @@ angular
 				TargetGroup: [],
 			}]
 		};
-
 
 		$scope.metricTypes = {
 			'App Usage Report': [

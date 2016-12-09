@@ -21,13 +21,17 @@
       <md-card>
       <md-card-title class="md-headline">Step 1: Basic Features</md-card-title>
       <md-card-content>
+        <form name="basicFeaturesForm">
         <div layout-xs="column" layout-gt-xs="row">
-
+        
           <md-input-container flex>
             <label>Frequency</label>
             <md-select name="frequency" ng-model="data.Frequency" ng-disabled="!basicFeaturesEditable" required>
               <md-option ng-repeat="freq in frequencyTypes" ng-value="freq">{{freq}}</md-option>
             </md-select>
+            <div ng-messages="basicFeaturesForm.frequency.$error" md-auto-hide="false">
+              <div ng-message="required">This is required.</div>
+            </div>
           </md-input-container>
 
           <md-input-container flex>
@@ -35,23 +39,33 @@
             <md-select name="object" ng-model="data.Object" ng-disabled="!basicFeaturesEditable" required>
               <md-option ng-repeat="obj in objectTypes" ng-value="obj">{{obj}}</md-option>
             </md-select>
+            <div ng-messages="basicFeaturesForm.object.$error" md-auto-hide="false">
+              <div ng-message="required">This is required.</div>
+            </div>
           </md-input-container>
 
           <md-input-container flex>
             <label>Unit Of Analysis</label>
-            <md-select name="unit-of-analysis" ng-model="data.UnitOfAnalysis" ng-disabled="!basicFeaturesEditable" required>
+            <md-select name="unitofanalysis" ng-model="data.UnitOfAnalysis" ng-disabled="!basicFeaturesEditable" required>
               <md-option ng-repeat="uoa in unitOATypes[data.Object]" ng-value="uoa">{{uoa.Type}}</md-option>
             </md-select>
+            <div ng-messages="basicFeaturesForm.unitofanalysis.$error" md-auto-hide="false">
+              <div ng-message="required">This is required.</div>
+            </div>
           </md-input-container>
 
           <md-input-container flex>
             <label>Report Type</label>
-            <md-select name="report-type" ng-model="data.ReportType" ng-disabled="!basicFeaturesEditable" required>
+            <md-select name="reporttype" ng-model="data.ReportType" ng-disabled="!basicFeaturesEditable" required>
               <md-option ng-repeat="rtype in reportTypes[data.Object]" ng-value="rtype">{{data.Object+' '+rtype.Type}}</md-option>
             </md-select>
+            <div ng-messages="basicFeaturesForm.reporttype.$error" md-auto-hide="false">
+              <div ng-message="required">This is required.</div>
+            </div>
           </md-input-container>
 
         </div>
+        </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
         <md-button ng-click="toggleBasicFeatures()">{{basicFeaturesOps}}</md-button>
@@ -64,6 +78,7 @@
       <md-card>
       <md-card-title class="md-headline">Step 2: Choose Metrics</md-card-title>
       <md-card-content>
+        <form name="metricForm">
         <div layout="column">
           <md-chips ng-model="data.Metrics" readonly="!metricEditable" md-require-match="true" required>
             <md-autocomplete
@@ -82,6 +97,7 @@
             </md-chip-template>
           </md-chips>
         </div>
+        </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
         <md-button ng-click="toggleMetric()">{{metricOps}}</md-button>
@@ -93,13 +109,14 @@
       <md-card>
       <md-card-title class="md-headline">{{data.Object+' Group Setting'}}</md-card-title>
       <md-card-content>
+        <form name="unitGroupForm">
         <md-list flex="">
         <md-list-item>
           <div layout="row" flex>
             <div class="irs-th" flex="30">Group Name</div>
             <div class="irs-th" flex="70">Group Items</div>
           </div>
-          <md-button class="md-secondary" ng-click="addRow()" ng-disabled="!unitGroupEditable">ADD</md-button>
+          <md-button class="md-secondary" ng-click="addUnitGroupRow()" ng-disabled="!unitGroupEditable">ADD</md-button>
         <md-divider></md-divider>
         </md-list-item>
         <md-list-item ng-repeat="group in data.UnitOfAnalysis.GroupSpec">
@@ -115,21 +132,109 @@
               </md-chips>
             </div>
           </div>
-          <md-button class="md-secondary" ng-disabled="!unitGroupEditable" ng-click="removeRow($index)">REMOVE</md-button>
+          <md-button class="md-secondary" ng-disabled="!unitGroupEditable" ng-click="removeUnitGroupRow($index)">REMOVE</md-button>
         </md-list-item>
         </md-list>
+        </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
         <md-button ng-click="toggleUnitGroup()">{{unitGroupOps}}</md-button>
       </md-card-actions>
       </md-card>
-    </div>   
+    </div>
+
+    <div flex-xs flex-gt-xs="100" layout="column" ng-if="data.ReportType.Type=='Usage By Target Report' && !basicFeaturesEditable">
+      <md-card>
+      <md-card-title class="md-headline">Target Group Setting</md-card-title>
+      <md-card-content>
+        <form name="targetGroupForm">
+        <md-list flex="">
+        <md-list-item>
+          <div layout="row" flex>
+            <div class="irs-th" flex="30">Target Group</div>
+            <div class="irs-th" flex="70">Query</div>
+          </div>
+          <md-button class="md-secondary" ng-click="addTargetGroupRow()" ng-disabled="!targetGroupEditable">ADD</md-button>
+        <md-divider></md-divider>
+        </md-list-item>
+        <md-list-item ng-repeat="group in data.ReportType.TargetGroup">
+          <div layout="row" flex>
+            <div flex="30">
+              <md-input-container class="md-block" flex="90" md-no-float >
+                <input type="text" ng-model="group.GroupName" placeholder="Target Group" ng-disabled="!targetGroupEditable">
+              </md-input-container>
+            </div>
+            <div flex="70">
+              <md-chips 
+                ng-model="group.QueryArray" md-on-add="group.Query = join2Query(group.QueryArray)" md-on-remove="group.Query = join2Query(group.QueryArray)" name="queryarray" readonly="!targetGroupEditable" md-autocomplete-snap md-require-match="true">
+                  <md-autocomplete
+                    md-selected-item="selectedItem"
+                    md-search-text="searchText"
+                    md-items="item in querySearchDemo(searchText)"
+                    md-item-text="item"
+                    placeholder="Enter Query">
+                    <span md-highlight-text="searchText">
+                      {{item.name}} - {{item.cat}}
+                    </span>
+                  </md-autocomplete>
+                <md-chip-template>
+                  {{$chip.name}}
+                </md-chip-template>
+              </md-chips>
+            </div>
+          </div>
+          <md-button class="md-secondary" ng-disabled="!targetGroupEditable" ng-click="removeTargetGroupRow($index)">REMOVE</md-button>
+        </md-list-item>
+        </md-list>
+        </form>
+      </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="toggleTargetGroup()">{{targetGroupOps}}</md-button>
+      </md-card-actions>
+      </md-card>
+    </div>
+
+    <div flex-xs flex-gt-xs="100" layout="column" ng-if="data.ReportType.Type=='Usage Day Part Report' && !basicFeaturesEditable">
+      <md-card>
+      <md-card-title class="md-headline">Day Part Report Setting</md-card-title>
+      <md-card-content>
+        <form name="daypartForm">
+        <div layout-xs="column" layout-gt-xs="row">
+          <md-input-container flex>
+            <label>From</label>
+            <input type="text" name="startTime" placeholder="HHMMSS" ng-pattern="/^[0-2][0-9][0-5][0-9][0-5][0-9]$/" ng-model="data.ReportType.StartTime" required>
+            <div ng-messages="daypartForm.startTime.$error" md-auto-hide="false">
+              <div ng-message="pattern">Please enter time in HHMMSS format.</div>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-input-container flex>
+            <label>To</label>
+            <input type="text" name="endTime" placeholder="HHMMSS" ng-pattern="/^[0-2][0-9][0-5][0-9][0-5][0-9]$/" ng-model="data.ReportType.EndTime" required>
+            <div ng-messages="daypartForm.endTime.$error" md-auto-hide="false">
+              <div ng-message="pattern">Please enter time in HHMMSS format.</div>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+          <md-input-container flex>
+            <label>By Every</label>
+            <input type="text" name="interval" placeholder="In minutes" ng-pattern="/^[0-9]+$/" ng-model="data.ReportType.Interval" required>
+            <div ng-messages="daypartForm.interval.$error" md-auto-hide="false">
+              <div ng-message="pattern">Please enter interval in INTEGER MINUTES.</div>
+              <div ng-message="required">This is required.</div>
+            </div>
+          </md-input-container>
+        </div>
+      </form>
+      </md-card-content>
+      </md-card>
+    </div>
 
     <div flex-xs flex-gt-xs="100" layout="column">
       <md-card>
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
-        <md-button ng-click="addCodebook();" class="md-primary md-raised">Step 1: Generate MAM Spec</md-button>
+        <md-button ng-click="clearOutput(); addCodebook();" class="md-primary md-raised">Step 1: Generate MAM Spec</md-button>
         <md-button ng-click="saveJSON();" class="md-primary md-raised">Step 2: Export MAM Spec</md-button>
       </md-card-actions>
       </md-card>

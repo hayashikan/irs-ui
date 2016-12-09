@@ -1,2 +1,2 @@
 angular
-	.module('irsApp', ['ngMaterial']);
+	.module('irsApp', ['ngMaterial', 'ngMessages']);
