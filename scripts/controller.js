@@ -11,6 +11,8 @@ angular
 			ReportType: null,
 			Metrics: []
     	};
+		
+		$scope.codebook = null;
 
     	// Add code book to mamspec
 		$scope.addCodebook = function () {
@@ -19,9 +21,10 @@ angular
 			console.log(filename);
 			$http.get(filename)
 				.then(function(res){
-					console.log('get data');
+					console.log('Codebook Get!');
 					$scope.codebook = res.data;
-					console.log($scope.codebook);
+					$scope.data.parse = $scope.codebook.parse;
+					$scope.data.Directory = $scope.codebook.Directory;
 				});
 		};
 
