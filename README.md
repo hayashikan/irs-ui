@@ -1,2 +1,2 @@
 # irs-ui
-IRS UI by AngularJS
+IRS UI by Angular Material
