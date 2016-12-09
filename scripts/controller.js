@@ -21,8 +21,8 @@ angular
 				.then(function(res){
 					console.log('get data');
 					$scope.codebook = res.data;
+					console.log($scope.codebook);
 				});
-			console.log($scope.codebook);
 		};
 
     	// Basic Features editable
