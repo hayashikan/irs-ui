@@ -127,16 +127,15 @@ angular
     		return function filterFn(item) {
     			return (item._lowername.indexOf(lowercaseQuery)===0) || (item._lowercat.indexOf(lowercaseQuery)===0);
     		};
-    	}
+    	};
 		
-		// Transform chips to make operators duplicatable.
-		$scope.transformChip = function (chip, index) {
-			if (chip.cat=='Operator') {
-				chip._id = index;
-			};
-			return chip;
+	//Transform Chip to make Operator duplicatable.
+	$scope.transformChip = function (chip, index) {
+		if (chip.cat=='Operator') {
+			chip._id = index;
 		};
-
+		return chip;
+	};
 
     	// Remove Row: App/Web Group
     	$scope.removeUnitGroupRow = function (index) {
