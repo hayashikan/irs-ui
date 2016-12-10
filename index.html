@@ -166,7 +166,14 @@
             </div>
             <div flex="70">
               <md-chips 
-                ng-model="group.QueryArray" md-on-add="group.Query = join2Query(group.QueryArray)" md-on-remove="group.Query = join2Query(group.QueryArray)" name="queryarray" readonly="!targetGroupEditable" md-autocomplete-snap md-require-match="true">
+                ng-model="group.QueryArray"
+                md-on-add="group.Query = join2Query(group.QueryArray)"
+                md-on-remove="group.Query = join2Query(group.QueryArray)"
+                md-transform-chip="transformChip($chip, $index);"
+                name="queryarray"
+                readonly="!targetGroupEditable"
+                md-autocomplete-snap
+                md-require-match="true">
                   <md-autocomplete
                     md-selected-item="selectedItem"
                     md-search-text="searchText"
