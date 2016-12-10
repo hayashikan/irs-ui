@@ -130,7 +130,7 @@ angular
     	}
 		
 		// Transform chips to make operators duplicatable.
-		$scope.transformChip(chip, index) {
+		$scope.transformChip = function (chip, index) {
 			if (chip.cat=='Operator') {
 				chip._id = index;
 			};
