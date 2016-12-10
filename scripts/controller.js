@@ -128,6 +128,14 @@ angular
     			return (item._lowername.indexOf(lowercaseQuery)===0) || (item._lowercat.indexOf(lowercaseQuery)===0);
     		};
     	}
+		
+		// Transform chips to make operators duplicatable.
+		$scope.transformChip(chip, index) {
+			if (chip.cat=='Operator') {
+				chip._id = index;
+			};
+			return chip;
+		};
 
 
     	// Remove Row: App/Web Group
