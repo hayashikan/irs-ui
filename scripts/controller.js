@@ -132,7 +132,11 @@ angular
 		var idIncrementor = 0;
 		//Transform Chip to make Operator duplicatable.
 		$scope.transformChip = function (chip, index) {
-			return {_id: ++idIncrementor, name: chip.name};
+			if (chip.cat == 'Operator') {
+				return {_id: ++idIncrementor, name: chip.name, query: chip.query};
+			} else {
+				return {_id: -1, name: chip.name, query: chip.query};
+			};
 		};
 
     	// Remove Row: App/Web Group
