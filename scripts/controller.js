@@ -129,9 +129,10 @@ angular
     		};
     	};
 		
+		var idIncrementor = 0;
 		//Transform Chip to make Operator duplicatable.
 		$scope.transformChip = function (chip, index) {
-			chip._id = index;
+			chip._id = ++idIncrementor;
 			return chip;
 		};
 
