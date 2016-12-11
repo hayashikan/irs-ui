@@ -129,13 +129,11 @@ angular
     		};
     	};
 		
-	//Transform Chip to make Operator duplicatable.
-	$scope.transformChip = function (chip, index) {
-		if (chip.cat=='Operator') {
+		//Transform Chip to make Operator duplicatable.
+		$scope.transformChip = function (chip, index) {
 			chip._id = index;
+			return chip;
 		};
-		return chip;
-	};
 
     	// Remove Row: App/Web Group
     	$scope.removeUnitGroupRow = function (index) {
