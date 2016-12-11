@@ -178,7 +178,7 @@
                     md-selected-item="selectedItem"
                     md-search-text="searchText"
                     md-items="item in querySearchDemo(searchText)"
-                    md-item-text="item"
+                    md-item-text="item.name + '-' + item.cat"
                     placeholder="Enter Query">
                     <span md-highlight-text="searchText">
                       {{item.name}} - {{item.cat}}
