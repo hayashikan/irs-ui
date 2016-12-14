@@ -209,7 +209,7 @@
         <div layout-xs="column" layout-gt-xs="row">
           <md-input-container flex>
             <label>From</label>
-            <input type="text" name="startTime" placeholder="HHMMSS" ng-pattern="/^[0-2][0-9][0-5][0-9][0-5][0-9]$/" ng-model="data.ReportType.StartTime" required>
+            <input type="text" name="startTime" placeholder="HHMMSS" ng-pattern="/^[0-2][0-9][0-5][0-9][0-5][0-9]$/" ng-model="data.ReportType.StartTime" ng-disabled="!dayPartEditable" required>
             <div ng-messages="daypartForm.startTime.$error" md-auto-hide="false">
               <div ng-message="pattern">Please enter time in HHMMSS format.</div>
               <div ng-message="required">This is required.</div>
@@ -217,7 +217,7 @@
           </md-input-container>
           <md-input-container flex>
             <label>To</label>
-            <input type="text" name="endTime" placeholder="HHMMSS" ng-pattern="/^[0-2][0-9][0-5][0-9][0-5][0-9]$/" ng-model="data.ReportType.EndTime" required>
+            <input type="text" name="endTime" placeholder="HHMMSS" ng-pattern="/^[0-2][0-9][0-5][0-9][0-5][0-9]$/" ng-model="data.ReportType.EndTime" ng-disabled="!dayPartEditable" required>
             <div ng-messages="daypartForm.endTime.$error" md-auto-hide="false">
               <div ng-message="pattern">Please enter time in HHMMSS format.</div>
               <div ng-message="required">This is required.</div>
@@ -225,7 +225,7 @@
           </md-input-container>
           <md-input-container flex>
             <label>By Every</label>
-            <input type="text" name="interval" placeholder="In minutes" ng-pattern="/^[0-9]+$/" ng-model="data.ReportType.Interval" required>
+            <input type="text" name="interval" placeholder="In minutes" ng-pattern="/^[0-9]+$/" ng-model="data.ReportType.Interval" ng-disabled="!dayPartEditable" required>
             <div ng-messages="daypartForm.interval.$error" md-auto-hide="false">
               <div ng-message="pattern">Please enter interval in INTEGER MINUTES.</div>
               <div ng-message="required">This is required.</div>
@@ -234,6 +234,9 @@
         </div>
       </form>
       </md-card-content>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button ng-click="toggleDayPart()">{{dayPartOps}}</md-button>
+      </md-card-actions>
       </md-card>
     </div>
 
@@ -247,23 +250,6 @@
       </md-card>
     </div>
       
-    <div flex-xs flex-gt-xs="50" layout="column">
-      <md-card>
-      <md-card-title class="md-headline">JSON</md-card-title>
-      <md-card-actions layout="column" layout-align="center stretch">
-        <pre>{{data | json: 4}}</pre>
-      </md-card-actions>
-      </md-card>
-    </div>
-      
-    <div flex-xs flex-gt-xs="50" layout="column">
-      <md-card>
-      <md-card-title class="md-headline">JSON</md-card-title>
-      <md-card-actions layout="column" layout-align="center stretch">
-        <pre>{{output | json: 4}}</pre>
-      </md-card-actions>
-      </md-card>
-    </div>
 
     </md-content>
     </div>
