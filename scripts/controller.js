@@ -90,7 +90,7 @@ angular
     		};
     	}
 
-    	// Target Analysis Group Editable
+    	// Target Group Editable
     	$scope.targetGroupEditable = true;
     	$scope.targetGroupOps = 'SAVE';
     	$scope.toggleTargetGroup = function () {
@@ -99,6 +99,18 @@ angular
     			$scope.targetGroupOps = 'SAVE';
     		} else {
     			$scope.targetGroupOps = 'EDIT';
+    		};
+    	}
+	
+	// Day Part Editable
+    	$scope.dayPartEditable = true;
+    	$scope.dayPartOps = 'SAVE';
+    	$scope.toggleDayPart = function () {
+    		$scope.dayPartEditable = !$scope.dayPartEditable;
+    		if ($scope.dayPartEditable) {
+    			$scope.dayPartOps = 'SAVE';
+    		} else {
+    			$scope.dayPartOps = 'EDIT';
     		};
     	}
 
