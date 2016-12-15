@@ -105,7 +105,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column" ng-if="(data.UnitOfAnalysis.Type=='Application Group' || data.UnitOfAnalysis.Type=='Website Group') && !basicFeaturesEditable">
+    <div flex="100" layout="column" ng-if="showAdditional.unitGroup">
       <md-card>
       <md-card-title class="md-headline">{{data.Object+' Group Setting'}}</md-card-title>
       <md-card-content>
@@ -143,7 +143,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column" ng-if="data.ReportType.Type=='Usage By Target Report' && !basicFeaturesEditable">
+    <div flex="100" layout="column" ng-if="showAdditional.targetGroup">
       <md-card>
       <md-card-title class="md-headline">Target Group Setting</md-card-title>
       <md-card-content>
@@ -201,7 +201,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column" ng-if="data.ReportType.Type=='Usage Day Part Report' && !basicFeaturesEditable">
+    <div flex="100" layout="column" ng-if="showAdditional.dayPart">
       <md-card>
       <md-card-title class="md-headline">Day Part Report Setting</md-card-title>
       <md-card-content>
