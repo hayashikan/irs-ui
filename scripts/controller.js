@@ -72,10 +72,10 @@ angular
 				$scope.basicFeaturesOps = 'SAVE';
 			} else {
 				$scope.basicFeaturesOps = 'EDIT';
-				$scope.showAdditional.unitGroup = $scope.showUnitGroup();
-				$scope.showAdditional.targetGroup = $scope.showTargetGroup();
-				$scope.showAdditional.dayPart = $scope.showDayPart();
 			};
+			$scope.showAdditional.unitGroup = $scope.showUnitGroup();
+			$scope.showAdditional.targetGroup = $scope.showTargetGroup();
+			$scope.showAdditional.dayPart = $scope.showDayPart();
 		};
 
 		// Metric editable
@@ -245,7 +245,7 @@ angular
 				demo._lowercat = demo.cat.toLowerCase();
 				return demo;
 			});
-    	};
+		};
 
 		$scope.frequencyTypes = [
 			'Daily',
