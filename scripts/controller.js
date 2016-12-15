@@ -1,8 +1,8 @@
 angular
 	.module('irsApp')
-	.controller('controller', ['$scope', '$http', IRSController]);
+	.controller('controller', ['$scope', '$http', '$window', IRSController]);
 
-	function IRSController($scope, $http) {
+	function IRSController($scope, $http, $window) {
 		
 		// data
 		$scope.data = {
@@ -41,6 +41,10 @@ angular
 					return item;
 				});};
 		};
+		
+		$scope.alertGenerate = function() {
+			$window.alert('Done! Please click EXPORT then.');
+		}
 
 		// Save JSON
 		$scope.saveJSON = function () {
