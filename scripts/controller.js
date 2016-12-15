@@ -172,16 +172,13 @@ angular
 				if ((($scope.showUnitGroup && !$scope.unitGroupEditable) || !$scope.showUnitGroup) && (($scope.showTargetGroup && !$scope.targetGroupEditable) || !$scope.showTargetGroup) && (($scope.showDayPart && !$scope.dayPartEditable) || !$scope.showDayPart)) {
 					$scope.generateBtnDisable = false;
 					$scope.generateBtnOps = "Generate MAM Spec";
-					return false;
 				} else {
 					$scope.generateBtnDisable = true;
 					$scope.generateBtnOps = "Save all sections first!";
-					return true;
 				};
 			} else {
 				$scope.generateBtnDisable = true;
 				$scope.generateBtnOps = "Save all sections first!";
-				return true;
 			};
 		};
 		
@@ -192,11 +189,9 @@ angular
 			if (!$scope.generateBtnDisable) {
 				$scope.exportBtnDisable = false;
 				$scope.exportBtnOps = "Export MAM Spec";
-				return false;
 			} else {
 				$scope.exportBtnDisable = true;
 				$scope.exportBtnOps = "Generate spec first!";
-				return true;
 			};
 		};
 
