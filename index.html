@@ -68,7 +68,7 @@
         </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="toggleBasicFeatures(); toggleGenerateBtn(); toggleExportBtn();">{{basicFeaturesOps}}</md-button>
+        <md-button ng-click="toggleBasicFeatures(); toggleGenerateBtn();">{{basicFeaturesOps}}</md-button>
       </md-card-actions>
       </md-card>
       
@@ -100,7 +100,7 @@
         </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="toggleMetric(); toggleGenerateBtn(); toggleExportBtn();">{{metricOps}}</md-button>
+        <md-button ng-click="toggleMetric(); toggleGenerateBtn();">{{metricOps}}</md-button>
       </md-card-actions>
       </md-card>
     </div>
@@ -138,7 +138,7 @@
         </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="toggleUnitGroup(); toggleGenerateBtn(); toggleExportBtn();">{{unitGroupOps}}</md-button>
+        <md-button ng-click="toggleUnitGroup(); toggleGenerateBtn();">{{unitGroupOps}}</md-button>
       </md-card-actions>
       </md-card>
     </div>
@@ -196,7 +196,7 @@
         </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="toggleTargetGroup(); toggleGenerateBtn(); toggleExportBtn();">{{targetGroupOps}}</md-button>
+        <md-button ng-click="toggleTargetGroup(); toggleGenerateBtn();">{{targetGroupOps}}</md-button>
       </md-card-actions>
       </md-card>
     </div>
@@ -235,7 +235,7 @@
       </form>
       </md-card-content>
       <md-card-actions layout="row" layout-align="end center">
-        <md-button ng-click="toggleDayPart(); toggleGenerateBtn(); toggleExportBtn();">{{dayPartOps}}</md-button>
+        <md-button ng-click="toggleDayPart(); toggleGenerateBtn();">{{dayPartOps}}</md-button>
       </md-card-actions>
       </md-card>
     </div>
@@ -245,7 +245,7 @@
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
         <md-button ng-disabled="generateBtnDisable" ng-click="clearOutput(); addCodebook(); alertGenerate(); generated = true;" class="md-primary md-raised">{{generateBtnOps}}</md-button>
-        <md-button ng-disabled="exportBtnDisable" ng-click="saveJSON();" class="md-primary md-raised">{{exportBtnOps}}</md-button>
+        <md-button ng-disabled="!generateBtnDisable && generated" ng-click="saveJSON();" class="md-primary md-raised">{{!generateBtnDisable && generated ? "Generage Spec first" : "Export MAM spec"}}</md-button>
       </md-card-actions>
       </md-card>
     </div>
