@@ -3,7 +3,6 @@ angular
 	.controller('controller', ['$scope', '$http', '$window', IRSController]);
 
 	function IRSController($scope, $http, $window) {
-		
 		// data
 		$scope.data = {
 			Frequency: null,
@@ -11,13 +10,18 @@ angular
 			UnitOfAnalysis: null,
 			ReportType: null,
 			Metrics: []
-    	};
+		};
 		
 		$scope.output = null;
 		$scope.codebook = null;
 		$scope.selectedItem = null;
 		$scope.searchText = null;
 		$scope.demographics = loadDemographics()
+		$scope.showAdditional = {
+			'unitGroup': false,
+			'targetGroup': false,
+			'dayPart': false
+		};
 
     	// Add code book to mamspec
 		$scope.addCodebook = function () {
@@ -53,59 +57,62 @@ angular
 			$scope.toJSON = angular.toJson($scope.output);
 			var blob = new Blob([$scope.toJSON], { type:"application/json;charset=utf-8;" });			
 			var downloadLink = angular.element('<a></a>');
-                        downloadLink.attr('href',window.URL.createObjectURL(blob));
-                        downloadLink.attr('download', 'default.mamspec');
+			downloadLink.attr('href',window.URL.createObjectURL(blob));
+			downloadLink.attr('download', 'default.mamspec');
 			downloadLink[0].click();
 			console.log('Save Done!');
 		};
 
-    	// Basic Features editable
-    	$scope.basicFeaturesEditable = true;
-    	$scope.basicFeaturesOps = 'SAVE';
-    	$scope.toggleBasicFeatures = function() {
-    		$scope.basicFeaturesEditable = !$scope.basicFeaturesEditable;
-    		if ($scope.basicFeaturesEditable) {
-    			$scope.basicFeaturesOps = 'SAVE';
-    		} else {
-    			$scope.basicFeaturesOps = 'EDIT';
-    		};
-    	};
+		// Basic Features editable
+		$scope.basicFeaturesEditable = true;
+		$scope.basicFeaturesOps = 'SAVE';
+		$scope.toggleBasicFeatures = function() {
+			$scope.basicFeaturesEditable = !$scope.basicFeaturesEditable;
+			if ($scope.basicFeaturesEditable) {
+				$scope.basicFeaturesOps = 'SAVE';
+			} else {
+				$scope.basicFeaturesOps = 'EDIT';
+				$scope.showAdditional.unitGroup = $scope.showUnitGroup();
+				$scope.showAdditional.targetGroup = $scope.showTargetGroup();
+				$scope.showAdditional.dayPart = $scope.showDayPart();
+			};
+		};
 
-    	// Metric toggle editable
-    	$scope.metricEditable = true;
-    	$scope.metricOps = 'SAVE';
-    	$scope.toggleMetric = function() {
-    		$scope.metricEditable = !$scope.metricEditable;
-    		if ($scope.metricEditable) {
-    			$scope.metricOps = 'SAVE';
-    		} else {
-    			$scope.metricOps = 'EDIT';
-    		};
-    	};
+		// Metric editable
+		$scope.metricEditable = true;
+		$scope.metricOps = 'SAVE';
+		$scope.toggleMetric = function() {
+			$scope.metricEditable = !$scope.metricEditable;
+			if ($scope.metricEditable) {
+				$scope.metricOps = 'SAVE';
+			} else {
+				$scope.metricOps = 'EDIT';
+			};
+		};
 
-    	// Unit of Analysis Group Editable
-    	$scope.unitGroupEditable = true;
-    	$scope.unitGroupOps = 'SAVE';
-    	$scope.toggleUnitGroup = function () {
-    		$scope.unitGroupEditable = !$scope.unitGroupEditable;
-    		if ($scope.unitGroupEditable) {
-    			$scope.unitGroupOps = 'SAVE';
-    		} else {
-    			$scope.unitGroupOps = 'EDIT';
-    		};
-    	}
+		// Unit of Analysis Group Editable
+		$scope.unitGroupEditable = true;
+		$scope.unitGroupOps = 'SAVE';
+		$scope.toggleUnitGroup = function () {
+			$scope.unitGroupEditable = !$scope.unitGroupEditable;
+			if ($scope.unitGroupEditable) {
+				$scope.unitGroupOps = 'SAVE';
+			} else {
+				$scope.unitGroupOps = 'EDIT';
+			};
+		};
 
-    	// Target Group Editable
-    	$scope.targetGroupEditable = true;
-    	$scope.targetGroupOps = 'SAVE';
-    	$scope.toggleTargetGroup = function () {
-    		$scope.targetGroupEditable = !$scope.targetGroupEditable;
-    		if ($scope.targetGroupEditable) {
-    			$scope.targetGroupOps = 'SAVE';
-    		} else {
-    			$scope.targetGroupOps = 'EDIT';
-    		};
-    	}
+		// Target Group Editable
+		$scope.targetGroupEditable = true;
+		$scope.targetGroupOps = 'SAVE';
+		$scope.toggleTargetGroup = function () {
+			$scope.targetGroupEditable = !$scope.targetGroupEditable;
+			if ($scope.targetGroupEditable) {
+				$scope.targetGroupOps = 'SAVE';
+			} else {
+				$scope.targetGroupOps = 'EDIT';
+			};
+		};
 	
 		// Day Part Editable
 		$scope.dayPartEditable = true;
@@ -117,7 +124,7 @@ angular
 			} else {
 				$scope.dayPartOps = 'EDIT';
 			};
-		}
+		};
 
 		// App/Web Group Spec validation
 		$scope.validateGroupItems = function(items, index) {
@@ -127,27 +134,51 @@ angular
 			if (!validated) {
 				items.splice(index-1, 1);
 			}
-			return items
-
+			return items;
+		};
+		
+		// App/Web Group Show
+		$scope.showUnitGroup = function() {
+			if (($scope.data.UnitOfAnalysis.Type=='Application Group' || $scope.data.UnitOfAnalysis.Type=='Website Group') && !$scope.basicFeaturesEditable) {
+				return true;
+			} else {
+				return false;
+			};
+		};
+		
+		// Target Group Show
+		$scope.showTargetGroup = function() {
+			if ($scope.data.ReportType.Type=='Usage Day Part Report' && !$scope.basicFeaturesEditable) {
+				return true;
+			} else {
+				return false;
+			};
 		};
 
+		// Day Part Show
+		$scope.showDayPart = function() {
+			if ($scope.data.ReportType.Type=='Usage Day Part Report' && !$scope.basicFeaturesEditable) {
+				return true;
+			} else {
+				return false;
+			};
+		};
 
 		// Search Demographics
 		$scope.querySearchDemo = function (query) {
 			var results = query ? $scope.demographics.filter($scope.createFilterFor(query)) : [];
-			return results
-		}
+			return results;
+		};
 
 		$scope.createFilterFor = function (query) {
 			var lowercaseQuery = angular.lowercase(query);
-
 			return function filterFn(item) {
 				return (item._lowername.indexOf(lowercaseQuery)===0) || (item._lowercat.indexOf(lowercaseQuery)===0);
 			};
 		};
 		
-		var idIncrementor = 0;
 		//Transform Chip to make Operator duplicatable.
+		var idIncrementor = 0;
 		$scope.transformChip = function (chip, index) {
 			if (chip.cat == 'Operator') {
 				return {_id: ++idIncrementor, name: chip.name, query: chip.query};
@@ -165,7 +196,7 @@ angular
 		// Add Row: App/Web Group
 		$scope.addUnitGroupRow = function () {
 			$scope.data.UnitOfAnalysis.GroupSpec.push({GroupName: "", GroupItems: []});
-		}
+		};
 
 		// Remove Row: Target Group
 		$scope.removeTargetGroupRow = function (index) {
@@ -176,7 +207,7 @@ angular
 		// Add Row: Target Group
 		$scope.addTargetGroupRow = function () {
 			$scope.data.ReportType.TargetGroup.push({GroupName: "", QueryArray: [], Query: ""});
-		}
+		};
 
 		// Target Group: Join Group Query
 		$scope.join2Query = function (queryarray) {
