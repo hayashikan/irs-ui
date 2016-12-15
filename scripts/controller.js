@@ -167,7 +167,7 @@ angular
 		// Generate Btn Disabled
 		$scope.generateBtnDisable = true;
 		$scope.generateBtnOps = "Save all sections first!";
-		$scope.generateBtnDisabled = function () {
+		$scope.toggleGenerateBtn = function () {
 			console.log("basic Features :", $scope.basicFeaturesEditable);
 			console.log("Metrics        :", $scope.metricEditable);
 			console.log("Additional     :", $scope.showAdditional);
@@ -191,7 +191,7 @@ angular
 		// Export Btn Disabled
 		$scope.exportBtnDisable = true;
 		$scope.exportBtnOps = "Generate spec first!";
-		$scope.exportBtnDisabled = function () {
+		$scope.toggleExportBtn = function () {
 			console.log("basic Features :", $scope.basicFeaturesEditable);
 			console.log("Metrics        :", $scope.metricEditable);
 			console.log("Additional     :", $scope.showAdditional);
