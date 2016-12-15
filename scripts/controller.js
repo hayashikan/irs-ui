@@ -148,7 +148,7 @@ angular
 		
 		// Target Group Show
 		$scope.showTargetGroup = function() {
-			if ($scope.data.ReportType.Type=='Usage Day Part Report' && !$scope.basicFeaturesEditable) {
+			if ($scope.data.ReportType.Type=='Usage By Target Report' && !$scope.basicFeaturesEditable) {
 				return true;
 			} else {
 				return false;
