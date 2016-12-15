@@ -244,7 +244,7 @@
       <md-card>
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
-        <md-button ng-disabled="generateBtnDisable" ng-click="clearOutput(); addCodebook(); alertGenerate();" class="md-primary md-raised">{{generateBtnOps}}</md-button>
+        <md-button ng-disabled="generateBtnDisable" ng-click="clearOutput(); addCodebook(); alertGenerate(); generated = true;" class="md-primary md-raised">{{generateBtnOps}}</md-button>
         <md-button ng-disabled="exportBtnDisable" ng-click="saveJSON();" class="md-primary md-raised">{{exportBtnOps}}</md-button>
       </md-card-actions>
       </md-card>
