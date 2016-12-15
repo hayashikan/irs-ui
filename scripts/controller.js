@@ -22,6 +22,7 @@ angular
 			'targetGroup': false,
 			'dayPart': false
 		};
+		$scope.generated = false;
 
 		// Add code book to mamspec
 		$scope.addCodebook = function () {
@@ -72,6 +73,7 @@ angular
 				$scope.basicFeaturesOps = 'SAVE';
 			} else {
 				$scope.basicFeaturesOps = 'EDIT';
+				$scope.generated = false;
 			};
 			$scope.showAdditional.unitGroup = $scope.showUnitGroup();
 			$scope.showAdditional.targetGroup = $scope.showTargetGroup();
@@ -87,6 +89,7 @@ angular
 				$scope.metricOps = 'SAVE';
 			} else {
 				$scope.metricOps = 'EDIT';
+				$scope.generated = false;
 			};
 		};
 
@@ -99,6 +102,7 @@ angular
 				$scope.unitGroupOps = 'SAVE';
 			} else {
 				$scope.unitGroupOps = 'EDIT';
+				$scope.generated = false;
 			};
 		};
 
@@ -111,6 +115,7 @@ angular
 				$scope.targetGroupOps = 'SAVE';
 			} else {
 				$scope.targetGroupOps = 'EDIT';
+				$scope.generated = false;
 			};
 		};
 	
@@ -123,6 +128,7 @@ angular
 				$scope.dayPartOps = 'SAVE';
 			} else {
 				$scope.dayPartOps = 'EDIT';
+				$scope.generated = false;
 			};
 		};
 
@@ -168,14 +174,8 @@ angular
 		$scope.generateBtnDisable = true;
 		$scope.generateBtnOps = "Save all sections first!";
 		$scope.toggleGenerateBtn = function () {
-			console.log("basic Features :", $scope.basicFeaturesEditable);
-			console.log("Metrics        :", $scope.metricEditable);
-			console.log("Additional     :", $scope.showAdditional);
-			console.log("showUnitGroup  :", $scope.showUnitGroup);
-			console.log("showTargetGroup:", $scope.showTargetGroup);
-			console.log("showDayPart    :", $scope.showDayPart);
 			if (!$scope.basicFeaturesEditable && !$scope.metricEditable) {
-				if ((($scope.showUnitGroup && !$scope.unitGroupEditable) || !$scope.showUnitGroup) && (($scope.showTargetGroup && !$scope.targetGroupEditable) || !$scope.showTargetGroup) && (($scope.showDayPart && !$scope.dayPartEditable) || !$scope.showDayPart)) {
+				if ((($scope.showAdditional.unitGroup && !$scope.unitGroupEditable) || !$scope.showAdditional.unitGroup) && (($scope.showAdditional.targetGroup && !$scope.targetGroupEditable) || !$scope.showAdditional.targetGroup) && (($scope.showAdditional.dayPart && !$scope.dayPartEditable) || !$scope.showAdditional.dayPart)) {
 					$scope.generateBtnDisable = false;
 					$scope.generateBtnOps = "Generate MAM Spec";
 				} else {
@@ -192,12 +192,6 @@ angular
 		$scope.exportBtnDisable = true;
 		$scope.exportBtnOps = "Generate spec first!";
 		$scope.toggleExportBtn = function () {
-			console.log("basic Features :", $scope.basicFeaturesEditable);
-			console.log("Metrics        :", $scope.metricEditable);
-			console.log("Additional     :", $scope.showAdditional);
-			console.log("showUnitGroup  :", $scope.showUnitGroup);
-			console.log("showTargetGroup:", $scope.showTargetGroup);
-			console.log("showDayPart    :", $scope.showDayPart);
 			if (!$scope.generateBtnDisable) {
 				$scope.exportBtnDisable = false;
 				$scope.exportBtnOps = "Export MAM Spec";
