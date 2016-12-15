@@ -23,7 +23,7 @@ angular
 			'dayPart': false
 		};
 
-    	// Add code book to mamspec
+		// Add code book to mamspec
 		$scope.addCodebook = function () {
 			// body...
 			var filename = 'scripts/' + $scope.data.Object + 'Codebook.json';
@@ -163,6 +163,42 @@ angular
 				return false;
 			};
 		};
+		
+		// Generate Btn Disabled
+		$scope.generateBtnDisable = true;
+		$scope.generateBtnOps = "Save all sections first!";
+		$scope.generateBtnDisabled = function () {
+			if (!$scope.basicFeaturesEditable && !$scope.metricEditable) {
+				if ((($scope.showUnitGroup && !$scope.unitGroupEditable) || !$scope.showUnitGroup) && (($scope.showTargetGroup && !$scope.targetGroupEditable) || !$scope.showTargetGroup) && (($scope.showDayPart && !$scope.dayPartEditable) || !$scope.showDayPart)) {
+					$scope.generateBtnDisable = false;
+					$scope.generateBtnOps = "Generate MAM Spec";
+					return false;
+				} else {
+					$scope.generateBtnDisable = true;
+					$scope.generateBtnOps = "Save all sections first!";
+					return true;
+				};
+			} else {
+				$scope.generateBtnDisable = true;
+				$scope.generateBtnOps = "Save all sections first!";
+				return true;
+			};
+		};
+		
+		// Export Btn Disabled
+		$scope.exportBtnDisable = true;
+		$scope.exportBtnOps = "Generate spec first!";
+		$scope.exportBtnDisabled = function () {
+			if (!$scope.generateBtnDisable) {
+				$scope.exportBtnDisable = false;
+				$scope.exportBtnOps = "Export MAM Spec";
+				return false;
+			} else {
+				$scope.exportBtnDisable = true;
+				$scope.exportBtnOps = "Generate spec first!";
+				return true;
+			};
+		};
 
 		// Search Demographics
 		$scope.querySearchDemo = function (query) {
@@ -189,7 +225,6 @@ angular
 
 		// Remove Row: App/Web Group
 		$scope.removeUnitGroupRow = function (index) {
-			console.log(index);
 			$scope.data.UnitOfAnalysis.GroupSpec.splice(index, 1)
 		};
 
@@ -200,7 +235,6 @@ angular
 
 		// Remove Row: Target Group
 		$scope.removeTargetGroupRow = function (index) {
-			console.log(index);
 			$scope.data.ReportType.TargetGroup.splice(index, 1)
 		};
 
