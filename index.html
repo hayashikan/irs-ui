@@ -244,8 +244,8 @@
       <md-card>
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
-        <md-button ng-click="clearOutput(); addCodebook(); alertGenerate();" class="md-primary md-raised">Step 1: Generate MAM Spec</md-button>
-        <md-button ng-click="saveJSON();" class="md-primary md-raised">Step 2: Export MAM Spec</md-button>
+        <md-button ng-disabled="generateBtnDisabled()" ng-click="clearOutput(); addCodebook(); alertGenerate();" class="md-primary md-raised">{{generateBtnOps}}</md-button>
+        <md-button ng-disabled="exportBtnDisabled()" ng-click="saveJSON();" class="md-primary md-raised">{{exportBtnOps}}</md-button>
       </md-card-actions>
       </md-card>
     </div>
