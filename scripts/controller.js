@@ -168,6 +168,12 @@ angular
 		$scope.generateBtnDisable = true;
 		$scope.generateBtnOps = "Save all sections first!";
 		$scope.generateBtnDisabled = function () {
+			console.log("basic Features :", $scope.basicFeaturesEditable);
+			console.log("Metrics        :", $scope.metricEditable);
+			console.log("Additional     :", $scope.showAdditional);
+			console.log("showUnitGroup  :", $scope.showUnitGroup);
+			console.log("showTargetGroup:", $scope.showTargetGroup);
+			console.log("showDayPart    :", $scope.showDayPart);
 			if (!$scope.basicFeaturesEditable && !$scope.metricEditable) {
 				if ((($scope.showUnitGroup && !$scope.unitGroupEditable) || !$scope.showUnitGroup) && (($scope.showTargetGroup && !$scope.targetGroupEditable) || !$scope.showTargetGroup) && (($scope.showDayPart && !$scope.dayPartEditable) || !$scope.showDayPart)) {
 					$scope.generateBtnDisable = false;
@@ -186,6 +192,12 @@ angular
 		$scope.exportBtnDisable = true;
 		$scope.exportBtnOps = "Generate spec first!";
 		$scope.exportBtnDisabled = function () {
+			console.log("basic Features :", $scope.basicFeaturesEditable);
+			console.log("Metrics        :", $scope.metricEditable);
+			console.log("Additional     :", $scope.showAdditional);
+			console.log("showUnitGroup  :", $scope.showUnitGroup);
+			console.log("showTargetGroup:", $scope.showTargetGroup);
+			console.log("showDayPart    :", $scope.showDayPart);
 			if (!$scope.generateBtnDisable) {
 				$scope.exportBtnDisable = false;
 				$scope.exportBtnOps = "Export MAM Spec";
