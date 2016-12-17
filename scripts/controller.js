@@ -27,16 +27,18 @@ angular
 		// Load Demographics code book
 		function loadDemographics() {
 			var filename = 'scripts/Demographics.json';
+			var demographics
 			$http.get(filename)
 				.then(function(res){
-					var demographics = res.data;
+					demographics = res.data;
+					demographics = demographics.map(function (demo) {
+						demo._lowername = demo.name.toLowerCase();
+						demo._lowercat = demo.cat.toLowerCase();
+						return demo;
+					});
 					console.log('Demographics Get!');
 				});
-			return demographics.map(function (demo) {
-				demo._lowername = demo.name.toLowerCase();
-				demo._lowercat = demo.cat.toLowerCase();
-				return demo;
-			});
+			return demographics;
 		};
 
 		// Add code book to mamspec
