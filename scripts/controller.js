@@ -308,6 +308,14 @@ angular
 				Type: 'Total',
 				AggCol: "Group_ID",
 				AggColName: "Group_Name"
+			},{
+				Type: 'Category',
+				AggCol: 'Category',
+				AggColName: 'Category_Name'
+			},{
+				Type: 'Subcategory',
+				AggCol: 'Subcategory',
+				AggColName: 'Category_Name'
 			}],
 			'Web': [{
 				Type: 'Website',
@@ -322,6 +330,14 @@ angular
 				Type: 'Total',
 				AggCol: "Group_ID",
 				AggColName: "Group_Name"
+			},{
+				Type: 'Category',
+				AggCol: 'Category',
+				AggColName: 'Category_Name'
+			},{
+				Type: 'Subcategory',
+				AggCol: 'Subcategory',
+				AggColName: 'Category_Name'
 			}]
 		};
 
