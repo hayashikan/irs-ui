@@ -16,8 +16,8 @@
     </md-toolbar>
 
     <div class="container">
-    <md-content class="md-padding" layout-xs="column" layout="row" layout-wrap>
-    <div flex="100" layout="column">
+    <md-content class="md-padding" layout="column">
+    <div flex layout="column">
       <md-card>
       <md-card-title class="md-headline">Step 1: Basic Features</md-card-title>
       <md-card-content>
@@ -74,7 +74,7 @@
       
     </div>
 
-    <div flex="100" layout="column">
+    <div flex layout="column">
       <md-card>
       <md-card-title class="md-headline">Step 2: Choose Metrics</md-card-title>
       <md-card-content>
@@ -105,7 +105,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column" ng-if="showAdditional.unitGroup">
+    <div flex layout="column" ng-if="showAdditional.unitGroup">
       <md-card>
       <md-card-title class="md-headline">{{data.Object+' Group Setting'}}</md-card-title>
       <md-card-content flex>
@@ -143,7 +143,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column" ng-if="showAdditional.targetGroup">
+    <div flex layout="column" ng-if="showAdditional.targetGroup">
       <md-card>
       <md-card-title class="md-headline">Target Group Setting</md-card-title>
       <md-card-content flex>
@@ -201,7 +201,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column" ng-if="showAdditional.dayPart">
+    <div flex layout="column" ng-if="showAdditional.dayPart">
       <md-card>
       <md-card-title class="md-headline">Day Part Report Setting</md-card-title>
       <md-card-content>
@@ -240,7 +240,7 @@
       </md-card>
     </div>
 
-    <div flex="100" layout="column">
+    <div flex layout="column">
       <md-card>
       <md-card-title class="md-headline">Export</md-card-title>
       <md-card-actions layout="column" layout-align="center stretch">
