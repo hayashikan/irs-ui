@@ -31,7 +31,6 @@ angular
 			$http.get(filename)
 				.then(function(res){
 					demographics = res.data;
-					console.log(demographics);
 					demographics = demographics.map(function (demo) {
 						demo._lowername = demo.name.toLowerCase();
 						demo._lowercat = demo.cat.toLowerCase();
@@ -39,6 +38,7 @@ angular
 					});
 					console.log('Demographics Get!');
 				});
+			console.log(demographics);
 			return demographics;
 		};
 
