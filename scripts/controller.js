@@ -16,7 +16,8 @@ angular
 		$scope.codebook = null;
 		$scope.selectedItem = null;
 		$scope.searchText = null;
-		$scope.demographics = loadDemographics()
+		$scope.demographics = loadDemographics();
+		console.log($scope.demographics);
 		$scope.showAdditional = {
 			'unitGroup': false,
 			'targetGroup': false,
