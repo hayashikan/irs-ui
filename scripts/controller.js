@@ -23,6 +23,21 @@ angular
 			'dayPart': false
 		};
 		$scope.generated = false;
+		
+		// Load Demographics code book
+		function loadDemographics() {
+			var filename = 'scripts/Demographics.json';
+			$http.get(filename)
+				.then(function(res){
+					var demographics = res.data;
+					console.log('Demographics Get!');
+				});
+			return demographics.map(function (demo) {
+				demo._lowername = demo.name.toLowerCase();
+				demo._lowercat = demo.cat.toLowerCase();
+				return demo;
+			});
+		};
 
 		// Add code book to mamspec
 		$scope.addCodebook = function () {
@@ -252,35 +267,6 @@ angular
 			});
 			return results.join(' ');
 		}
-
-		function loadDemographics() {
-			var demographics = [{
-					name: 'and', cat: 'Operator', query: "&"
-				},{
-					name: 'or', cat: 'Operator', query: "|"
-				},{
-					name: '(', cat: 'Operator', query: '('
-				},{
-					name: ')', cat: 'Operator', query: ')'
-				},{
-					name: 'Male', cat: 'Gender', query: "Gender=='01'"
-				},{
-					name: 'Female', cat: 'Gender', query: "Gender=='02'"
-				},{
-					name: '18 - 24', cat: 'Age Group', query: "(Age_Group=='01' | Age_Group=='02')"
-				},{
-					name: '25 - 34', cat: 'Age Group', query: "(Age_Group=='03' | Age_Group=='04')"
-				},{
-					name: '35 - 49', cat: 'Age Group', query: "(Age_Group=='05' | Age_Group=='06' | Age_Group=='07')"
-				},{
-					name: '50 - 64', cat: 'Age Group', query: "(Age_Group=='08' | Age_Group=='09' | Age_Group=='10')"
-				}];
-			return demographics.map(function (demo) {
-				demo._lowername = demo.name.toLowerCase();
-				demo._lowercat = demo.cat.toLowerCase();
-				return demo;
-			});
-		};
 
 		$scope.frequencyTypes = [
 			'Daily',
