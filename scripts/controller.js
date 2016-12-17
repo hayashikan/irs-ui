@@ -16,7 +16,8 @@ angular
 		$scope.codebook = null;
 		$scope.selectedItem = null;
 		$scope.searchText = null;
-		$scope.demographics = loadDemographics();
+		$scope.demographics = null;
+		loadDemographics();
 		$scope.showAdditional = {
 			'unitGroup': false,
 			'targetGroup': false,
@@ -27,19 +28,16 @@ angular
 		// Load Demographics code book
 		function loadDemographics() {
 			var filename = 'scripts/Demographics.json';
-			var demographics
 			$http.get(filename)
 				.then(function(res){
-					demographics = res.data;
-					demographics = demographics.map(function (demo) {
+					$scope.demographics = res.data;
+					$scope.demographics = $scope.demographics.map(function (demo) {
 						demo._lowername = demo.name.toLowerCase();
 						demo._lowercat = demo.cat.toLowerCase();
 						return demo;
 					});
 					console.log('Demographics Get!');
 				});
-			console.log(demographics);
-			return demographics;
 		};
 
 		// Add code book to mamspec
