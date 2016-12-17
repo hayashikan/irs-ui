@@ -39,6 +39,7 @@ angular
 					});
 					console.log('Demographics Get!');
 				});
+			console.log(demographics);
 			return demographics;
 		};
 
