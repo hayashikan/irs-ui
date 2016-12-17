@@ -17,7 +17,6 @@ angular
 		$scope.selectedItem = null;
 		$scope.searchText = null;
 		$scope.demographics = loadDemographics();
-		console.log($scope.demographics);
 		$scope.showAdditional = {
 			'unitGroup': false,
 			'targetGroup': false,
@@ -32,6 +31,7 @@ angular
 			$http.get(filename)
 				.then(function(res){
 					demographics = res.data;
+					console.log(demographics);
 					demographics = demographics.map(function (demo) {
 						demo._lowername = demo.name.toLowerCase();
 						demo._lowercat = demo.cat.toLowerCase();
@@ -39,7 +39,6 @@ angular
 					});
 					console.log('Demographics Get!');
 				});
-			console.log(demographics);
 			return demographics;
 		};
 
