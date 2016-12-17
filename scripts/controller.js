@@ -305,10 +305,6 @@ angular
 				AggColName: "Group_Name",
 				GroupSpec: [{GroupName: "", GroupItems: []}]
 			},{
-				Type: 'Total',
-				AggCol: "Group_ID",
-				AggColName: "Group_Name"
-			},{
 				Type: 'Category',
 				AggCol: 'Category',
 				AggColName: 'Category_Name'
@@ -316,6 +312,10 @@ angular
 				Type: 'Subcategory',
 				AggCol: 'Subcategory',
 				AggColName: 'Category_Name'
+			},{
+				Type: 'Total',
+				AggCol: "Group_ID",
+				AggColName: "Group_Name"
 			}],
 			'Web': [{
 				Type: 'Website',
@@ -327,10 +327,6 @@ angular
 				AggColName: "Group_Name",
 				GroupSpec: [{GroupName: "", GroupItems: []}]
 			}, {
-				Type: 'Total',
-				AggCol: "Group_ID",
-				AggColName: "Group_Name"
-			},{
 				Type: 'Category',
 				AggCol: 'Category',
 				AggColName: 'Category_Name'
@@ -338,6 +334,10 @@ angular
 				Type: 'Subcategory',
 				AggCol: 'Subcategory',
 				AggColName: 'Category_Name'
+			},{
+				Type: 'Total',
+				AggCol: "Group_ID",
+				AggColName: "Group_Name"
 			}]
 		};
 
