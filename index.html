@@ -225,7 +225,7 @@
           </md-input-container>
           <md-input-container flex>
             <label>By Every</label>
-            <input type="text" name="interval" placeholder="In minutes" ng-pattern="/^[0-9]+$/" ng-model="data.ReportType.Interval" ng-disabled="!dayPartEditable" required>
+            <input type="number" name="interval" placeholder="In minutes" ng-pattern="/^[0-9]+$/" ng-model="data.ReportType.Interval" ng-disabled="!dayPartEditable" required>
             <div ng-messages="daypartForm.interval.$error" md-auto-hide="false">
               <div ng-message="pattern">Please enter interval in INTEGER MINUTES.</div>
               <div ng-message="required">This is required.</div>
