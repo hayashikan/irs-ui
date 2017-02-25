@@ -170,7 +170,7 @@ angular
 		
 		// Target Group Show
 		$scope.showTargetGroup = function() {
-			if ($scope.data.ReportType.Type=='Usage By Target Report' && !$scope.basicFeaturesEditable) {
+			if (($scope.data.ReportType.Type=='Usage By Target Report' || $scope.data.ReportType.Type=='Usage Day Part By Target Report') && !$scope.basicFeaturesEditable) {
 				return true;
 			} else {
 				return false;
@@ -340,6 +340,12 @@ angular
 				Interval: 60,
 				StartTime: '000000',
 				EndTime: '235959'
+			}, {
+				Type: 'Usage Day Part By Target Report',
+				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}],
+				Interval: 60,
+				StartTime: '000000',
+				EndTime: '235959'
 			}],
 			'Web': [{
 				Type: 'Usage Report'
@@ -367,6 +373,9 @@ angular
 				'Time Per User (in minutes)'
 			],
 			'App Usage Day Part Report': [
+				'Reach (000)'
+			],
+			'App Usage Day Part By Target Report': [
 				'Reach (000)'
 			],
 			'Web Usage Report': [
