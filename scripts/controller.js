@@ -338,7 +338,7 @@ angular
 				Type: 'Usage Report'
 			}, {
 				Type: 'Usage By Target Report',
-				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}],
+				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}]
 			}, {
 				Type: 'Usage Day Part Report',
 				Interval: 60,
@@ -350,12 +350,22 @@ angular
 				Interval: 60,
 				StartTime: '000000',
 				EndTime: '235959'
+			}, {
+				Type: 'App Installation Report'
+			}, {
+				Type: 'App Installation By Target Report',
+				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}]
+			}, {
+				Type: 'Data Usage Report'
+			}, {
+				Type: 'Data Usage By Target Report',
+				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}]
 			}],
 			'Web': [{
 				Type: 'Usage Report'
 			}, {
 				Type: 'Usage By Target Report',
-				TargetGroup: [],
+				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}],
 			}]
 		};
 
