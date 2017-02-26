@@ -50,13 +50,16 @@ angular
 					$scope.output.parse = $scope.codebook.parse;
 					$scope.output.Directory = $scope.codebook.Directory;
 					console.log('Codebook Get!');
+					if ($scope.output.Frequency=='Weekday-weekend (Monthly data)'){
+						$scope.output.parse.APPSWD.usecols = ["Individual_ID", "Date", "Start_Time", "End_Time", "Application"];
+					}
 				});
 		};
 		
 		// clear output
 		$scope.clearOutput = function () {
 			$scope.output = angular.copy($scope.data);
-			if ($scope.output.ReportType.Type=='Usage By Target Report') {
+			if ($scope.output.ReportType.Type=='Usage By Target Report' || $scope.output.ReportType.Type=='Usage Day Part By Target Report') {
 				$scope.output.ReportType.TargetGroup = $scope.output.ReportType.TargetGroup.map(function (item) {
 					delete item.QueryArray;
 					return item;
