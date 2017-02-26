@@ -179,7 +179,7 @@ angular
 
 		// Day Part Show
 		$scope.showDayPart = function() {
-			if ($scope.data.ReportType.Type=='Usage Day Part Report' && !$scope.basicFeaturesEditable) {
+			if (($scope.data.ReportType.Type=='Usage Day Part Report' || $scope.data.ReportType.Type=='Usage Day Part By Target Report' ) && !$scope.basicFeaturesEditable) {
 				return true;
 			} else {
 				return false;
