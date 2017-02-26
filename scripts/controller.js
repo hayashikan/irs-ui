@@ -51,7 +51,7 @@ angular
 					$scope.output.Directory = $scope.codebook.Directory;
 					console.log('Codebook Get!');
 					if ($scope.output.Frequency=='Weekday-weekend (Monthly data)'){
-						$scope.output.parse.APPSWD.usecols = ["Individual_ID", "Date", "Start_Time", "End_Time", "Application"];
+						$scope.output.parse[$scope.data.Object+'SWD'].usecols = ["Individual_ID", "Date", "Start_Time", "End_Time", "Application"];
 					}
 				});
 		};
