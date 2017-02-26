@@ -351,9 +351,9 @@ angular
 				StartTime: '000000',
 				EndTime: '235959'
 			}, {
-				Type: 'App Installation Report'
+				Type: 'Installation Report'
 			}, {
-				Type: 'App Installation By Target Report',
+				Type: 'Installation By Target Report',
 				TargetGroup: [{GroupName: "", QueryArray: [], Query: ""}]
 			}, {
 				Type: 'Data Usage Report'
