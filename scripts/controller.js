@@ -275,7 +275,8 @@ angular
 		$scope.frequencyTypes = [
 			'Daily',
 			'Daily Average',
-			'Monthly'
+			'Monthly',
+			'Weekday-weekend (Monthly data)'
 		];
 
 		$scope.objectTypes = [
