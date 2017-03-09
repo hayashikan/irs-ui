@@ -387,10 +387,12 @@ angular
 				'Time Per User (in minutes)'
 			],
 			'App Usage Day Part Report': [
-				'Reach (000)'
+				'Reach (000)',
+				'Total Minutes (000)'
 			],
 			'App Usage Day Part By Target Report': [
-				'Reach (000)'
+				'Reach (000)',
+				'Total Minutes (000)'
 			],
 			'Web Usage Report': [
 				'Reach (000)',
