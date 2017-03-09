@@ -276,7 +276,8 @@ angular
 			'Daily',
 			'Daily Average',
 			'Monthly',
-			'Weekday-weekend (Monthly data)'
+			'Weekday-weekend (Monthly data)',
+			'Weekday-weekend (Daily data)'
 		];
 
 		$scope.objectTypes = [
